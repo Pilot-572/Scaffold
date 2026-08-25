@@ -1,4 +1,4 @@
-# ── ServerForge database ──
+# ── Scaffold database ──
 # SQLite by default; DATABASE_URL swap moves this to Postgres unchanged.
 from datetime import datetime, timezone
 

@@ -1,4 +1,4 @@
-# ── ServerForge dashboard ──
+# ── Scaffold dashboard ──
 # Flask + Jinja + htmx. All state changes are POST + CSRF; the user's Manage
 # Server permission is re-checked server-side (fresh, uncached) on every apply.
 import json
@@ -17,7 +17,7 @@ from shared.diff import build_plan
 from shared.presets import list_presets, load_preset
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(levelname)s %(message)s")
-log = logging.getLogger("serverforge.web")
+log = logging.getLogger("scaffold.web")
 
 app = Flask(__name__)
 app.secret_key = config.SECRET_KEY

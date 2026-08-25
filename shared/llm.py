@@ -12,7 +12,7 @@ from shared import config
 from shared.presets import closest_preset, load_preset
 from shared.schema import ALLOWED_PERMS, Structure
 
-log = logging.getLogger("serverforge.llm")
+log = logging.getLogger("scaffold.llm")
 
 SYSTEM_PROMPT = f"""You design Discord server structures. Reply with ONLY a JSON object, no prose, no markdown fences.
 

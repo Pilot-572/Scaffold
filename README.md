@@ -1,4 +1,4 @@
-# ServerForge
+# Scaffold
 
 A Discord bot + web dashboard that designs server structures and applies them.
 Describe your community in plain words (or pick a preset), preview the layout as

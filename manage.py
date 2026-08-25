@@ -15,7 +15,7 @@ def make_key() -> str:
 
 
 def main():
-    ap = argparse.ArgumentParser(description="ServerForge license keys")
+    ap = argparse.ArgumentParser(description="Scaffold license keys")
     sub = ap.add_subparsers(dest="cmd", required=True)
     gen = sub.add_parser("gen")
     gen.add_argument("count", nargs="?", type=int, default=1)

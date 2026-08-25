@@ -14,7 +14,7 @@ from shared.db import Job, SessionLocal, utcnow
 from shared.diff import build_plan
 from shared.schema import Structure
 
-log = logging.getLogger("serverforge.apply")
+log = logging.getLogger("scaffold.apply")
 
 PERMISSION_HINT = (
     "Fix: open Server Settings → Roles, make sure the bot's role has Manage Channels, "

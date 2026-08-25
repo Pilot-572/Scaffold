@@ -1,4 +1,4 @@
-# ── ServerForge bot worker ──
+# ── Scaffold bot worker ──
 # Gateway presence + job consumer. The dashboard is the main surface; slash
 # commands are deliberately thin.
 import asyncio
@@ -13,7 +13,7 @@ from shared import config
 from shared.db import Guild, Job, SessionLocal, init_db, utcnow
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(levelname)s %(message)s")
-log = logging.getLogger("serverforge.bot")
+log = logging.getLogger("scaffold.bot")
 
 intents = discord.Intents.default()  # guilds only; no privileged intents needed
 

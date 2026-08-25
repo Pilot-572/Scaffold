@@ -1,4 +1,4 @@
-# ── ServerForge config ──
+# ── Scaffold config ──
 # All values from .env. Nothing here logs or prints secrets.
 import os
 from urllib.parse import urlparse
@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-BRAND = os.getenv("BRAND_NAME", "ServerForge")
+BRAND = os.getenv("BRAND_NAME", "Scaffold")
 
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN", "")
 DISCORD_CLIENT_ID = os.getenv("DISCORD_CLIENT_ID", "")
@@ -19,7 +19,7 @@ LLM_BASE_URL = os.getenv("LLM_BASE_URL", "https://openrouter.ai/api/v1").rstrip(
 LLM_MODEL = os.getenv("LLM_MODEL", "openai/gpt-4o-mini")
 
 SECRET_KEY = os.getenv("SECRET_KEY", "")
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///serverforge.db")
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///scaffold.db")
 PORT = int(os.getenv("PORT", "5000"))
 
 # Dashboard origin, derived from the redirect URI (used by /setup and the bot).
