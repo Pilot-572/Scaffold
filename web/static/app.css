@@ -100,6 +100,17 @@ input[type="text"]:focus, textarea:focus {
   border-color: rgba(124, 134, 255, 0.6);
   box-shadow: 0 0 0 3px rgba(124, 134, 255, 0.18);
 }
+/* The composer grows with the prompt — room to think, never a scrolling slit */
+textarea.composer {
+  field-sizing: content;      /* auto-grow (Chromium); rows=6 is the fallback floor */
+  min-height: 9.5rem;
+  max-height: 60vh;
+  resize: vertical;
+  font-size: 15px;
+  line-height: 1.65;
+  padding: 14px 16px;
+}
+
 /* Placeholder reads as a hint, never as typed text */
 input::placeholder, textarea::placeholder { color: rgba(155, 155, 163, 0.55); }
 /* Locked field looks locked, not just its button */

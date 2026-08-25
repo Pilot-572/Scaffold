@@ -60,8 +60,9 @@
   <form hx-post="{{ url_for('preview', guild_id=g.id) }}" hx-target="#workbench"
         hx-swap="innerHTML show:#workbench:top" hx-indicator="this" class="mt-4">
     <input type="hidden" name="_csrf" value="{{ csrf_token }}">
-    <textarea name="description" rows="3" maxlength="2000"
-              placeholder="e.g. A 40-person milsim clan playing Arma. Command staff, two squads, mission planning that only officers can see, and a public recruitment area."></textarea>
+    <textarea name="description" id="describe" rows="6" maxlength="2000"
+              spellcheck="false" autocomplete="off" class="composer"
+              placeholder="e.g. A 40-person milsim clan: command staff, two squads, officer-only mission planning, a public recruitment area. The more detail, the better the layout."></textarea>
     <div class="mt-3 flex items-center gap-3">
       <button class="btn btn-primary press">
         <span class="htmx-hide">Generate preview</span>
@@ -73,6 +74,7 @@
           · <a href="{{ url_for('account') }}" class="text-accent hover:underline">Premium</a> raises this to 20/day
         {% endif %}
       </span>
+      <span id="charcount" class="ml-auto text-xs text-mut" style="font-variant-numeric: tabular-nums"></span>
     </div>
   </form>
 </section>
@@ -97,5 +99,16 @@
     {% endfor %}
   </div>
 </section>
+
+<script>
+  const ta = document.getElementById('describe'), cc = document.getElementById('charcount');
+  ta.addEventListener('input', () => {
+    cc.textContent = ta.value ? `${ta.value.length} / ${ta.maxLength}` : '';
+    cc.classList.toggle('text-warn', ta.maxLength - ta.value.length < 100);
+  });
+  ta.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') ta.form.requestSubmit();
+  });
+</script>
 
 {% endblock %}

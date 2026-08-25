@@ -22,6 +22,8 @@ log = logging.getLogger("scaffold.web")
 app = Flask(__name__)
 app.secret_key = config.SECRET_KEY
 app.config.update(
+    TEMPLATES_AUTO_RELOAD=True,      # dev server: edits show up without a restart
+    SEND_FILE_MAX_AGE_DEFAULT=0,     # dev server: no stale app.css in the browser
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE="Lax",
     SESSION_COOKIE_SECURE=config.OAUTH_REDIRECT_URI.startswith("https"),
