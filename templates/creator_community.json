@@ -1,0 +1,27 @@
+{
+  "name": "Creator Community",
+  "description": "Announcement-driven fan hub with a supporters-only lounge and creative channels.",
+  "roles": [
+    {"name": "Creator", "color": "#e91e63", "hoist": true, "mentionable": false, "permissions": []},
+    {"name": "Mod", "color": "#1abc9c", "hoist": true, "mentionable": true, "permissions": []},
+    {"name": "Supporter", "color": "#f39c12", "hoist": false, "mentionable": false, "permissions": []},
+    {"name": "Member", "color": "#7289da", "hoist": false, "mentionable": false, "permissions": []}
+  ],
+  "categories": [
+    {"name": "Official"},
+    {"name": "Community"},
+    {"name": "Supporters"},
+    {"name": "Voice"}
+  ],
+  "channels": [
+    {"name": "announcements", "type": "text", "topic": "New videos, streams and news. Read only.", "category": "Official", "mode": "announcement", "gate_roles": []},
+    {"name": "content-drops", "type": "text", "topic": "Every upload, in order. Read only.", "category": "Official", "mode": "announcement", "gate_roles": []},
+    {"name": "general", "type": "text", "topic": "Main community chat.", "category": "Community", "mode": "public", "gate_roles": []},
+    {"name": "fan-art", "type": "text", "topic": "Your art, edits and memes.", "category": "Community", "mode": "public", "gate_roles": []},
+    {"name": "clips", "type": "text", "topic": "Best moments from streams and videos.", "category": "Community", "mode": "public", "gate_roles": []},
+    {"name": "supporters-lounge", "type": "text", "topic": "Supporters-only hangout.", "category": "Supporters", "mode": "role_gated", "gate_roles": ["Supporter", "Creator", "Mod"]},
+    {"name": "behind-the-scenes", "type": "text", "topic": "Early looks and works in progress.", "category": "Supporters", "mode": "role_gated", "gate_roles": ["Supporter", "Creator", "Mod"]},
+    {"name": "Hangout", "type": "voice", "topic": null, "category": "Voice", "mode": "public", "gate_roles": []},
+    {"name": "Watch Party", "type": "voice", "topic": null, "category": "Voice", "mode": "public", "gate_roles": []}
+  ]
+}

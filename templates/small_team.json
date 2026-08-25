@@ -1,0 +1,20 @@
+{
+  "name": "Small Team",
+  "description": "A lean workspace: announcements, project talk, standups and a meeting room.",
+  "roles": [
+    {"name": "Lead", "color": "#e67e22", "hoist": true, "mentionable": true, "permissions": []},
+    {"name": "Team", "color": "#3498db", "hoist": false, "mentionable": false, "permissions": []}
+  ],
+  "categories": [
+    {"name": "Work"},
+    {"name": "Social"}
+  ],
+  "channels": [
+    {"name": "announcements", "type": "text", "topic": "Decisions and headlines. Read only.", "category": "Work", "mode": "announcement", "gate_roles": []},
+    {"name": "standup", "type": "text", "topic": "Yesterday / today / blockers.", "category": "Work", "mode": "public", "gate_roles": []},
+    {"name": "projects", "type": "text", "topic": "Ongoing work, one thread per project.", "category": "Work", "mode": "public", "gate_roles": []},
+    {"name": "random", "type": "text", "topic": "Everything else.", "category": "Social", "mode": "public", "gate_roles": []},
+    {"name": "Meeting Room", "type": "voice", "topic": null, "category": "Work", "mode": "public", "gate_roles": []},
+    {"name": "Focus", "type": "voice", "topic": null, "category": "Work", "mode": "public", "gate_roles": []}
+  ]
+}

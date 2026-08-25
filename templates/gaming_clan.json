@@ -1,0 +1,31 @@
+{
+  "name": "Gaming Clan / Milsim Faction",
+  "description": "Command structure, gated ops planning, squads and a public recruitment front.",
+  "roles": [
+    {"name": "Commander", "color": "#e74c3c", "hoist": true, "mentionable": false, "permissions": []},
+    {"name": "Officer", "color": "#e67e22", "hoist": true, "mentionable": true, "permissions": []},
+    {"name": "NCO", "color": "#f1c40f", "hoist": true, "mentionable": true, "permissions": []},
+    {"name": "Member", "color": "#2ecc71", "hoist": false, "mentionable": false, "permissions": []},
+    {"name": "Recruit", "color": "#95a5a6", "hoist": false, "mentionable": false, "permissions": []}
+  ],
+  "categories": [
+    {"name": "Command"},
+    {"name": "Operations"},
+    {"name": "Community"},
+    {"name": "Voice"}
+  ],
+  "channels": [
+    {"name": "announcements", "type": "text", "topic": "Orders and clan-wide announcements. Read only.", "category": "Command", "mode": "announcement", "gate_roles": []},
+    {"name": "command-staff", "type": "text", "topic": "Leadership coordination.", "category": "Command", "mode": "role_gated", "gate_roles": ["Commander", "Officer"]},
+    {"name": "mission-planning", "type": "text", "topic": "Op planning and briefings. Officers and NCOs.", "category": "Operations", "mode": "role_gated", "gate_roles": ["Commander", "Officer", "NCO"]},
+    {"name": "after-action-reports", "type": "text", "topic": "AARs: what went right, what went wrong.", "category": "Operations", "mode": "public", "gate_roles": []},
+    {"name": "loadouts-and-tactics", "type": "text", "topic": "Kit builds, tactics discussion, doctrine.", "category": "Operations", "mode": "public", "gate_roles": []},
+    {"name": "general", "type": "text", "topic": "Off-duty chat.", "category": "Community", "mode": "public", "gate_roles": []},
+    {"name": "recruitment", "type": "text", "topic": "Want in? Post here and an officer will pick it up.", "category": "Community", "mode": "public", "gate_roles": []},
+    {"name": "media", "type": "text", "topic": "Screenshots and clips from ops.", "category": "Community", "mode": "public", "gate_roles": []},
+    {"name": "Command Net", "type": "voice", "topic": null, "category": "Voice", "mode": "role_gated", "gate_roles": ["Commander", "Officer", "NCO"]},
+    {"name": "Squad 1", "type": "voice", "topic": null, "category": "Voice", "mode": "public", "gate_roles": []},
+    {"name": "Squad 2", "type": "voice", "topic": null, "category": "Voice", "mode": "public", "gate_roles": []},
+    {"name": "Lounge", "type": "voice", "topic": null, "category": "Voice", "mode": "public", "gate_roles": []}
+  ]
+}

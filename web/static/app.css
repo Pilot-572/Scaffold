@@ -1,0 +1,113 @@
+/* ── ServerForge material + motion layer (apple-design) ── */
+
+:root { color-scheme: dark; }
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background:
+    radial-gradient(1100px 500px at 50% -10%, rgba(124, 134, 255, 0.13), transparent 60%),
+    radial-gradient(900px 500px at 85% 110%, rgba(52, 211, 153, 0.05), transparent 60%),
+    #0a0a0f;
+  background-attachment: fixed;
+}
+
+/* Translucent chrome — content scrolls underneath, bright top edge catches light */
+.chrome {
+  background: rgba(14, 14, 20, 0.6);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.brandmark {
+  width: 22px; height: 22px; border-radius: 7px;
+  background: conic-gradient(from 210deg, #7c86ff, #34d399, #7c86ff);
+  box-shadow: 0 0 14px rgba(124, 134, 255, 0.45);
+}
+
+/* Panels: one light material level, never stacked translucency */
+.panel {
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+}
+.panel-hover { transition: transform 160ms cubic-bezier(0.2, 0.9, 0.3, 1), border-color 160ms; }
+.panel-hover:hover { transform: translateY(-2px); border-color: rgba(255, 255, 255, 0.16); }
+
+/* Feedback on press, instantly — never only on release */
+.press { transition: transform 100ms ease-out, opacity 100ms ease-out; }
+.press:active { transform: scale(0.97); }
+
+.navlink { padding: 6px 10px; border-radius: 8px; }
+.navlink:hover { color: #f5f5f7; background: rgba(255, 255, 255, 0.06); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border-radius: 12px; padding: 10px 18px;
+  font-size: 14px; font-weight: 600; letter-spacing: -0.01em;
+  transition: transform 100ms ease-out, filter 140ms ease-out, background 140ms;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: #7c86ff; color: #0a0a0f; }
+.btn-primary:hover { filter: brightness(1.1); }
+.btn-quiet { background: rgba(255, 255, 255, 0.08); color: #f5f5f7; }
+.btn-quiet:hover { background: rgba(255, 255, 255, 0.13); }
+.btn[disabled] { opacity: 0.45; pointer-events: none; }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  border-radius: 999px; padding: 3px 10px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.02em;
+}
+.chip-create { background: rgba(52, 211, 153, 0.14); color: #34d399; }
+.chip-skip   { background: rgba(255, 255, 255, 0.07); color: #9b9ba3; }
+.chip-fail   { background: rgba(248, 113, 113, 0.14); color: #f87171; }
+.chip-mode   { background: rgba(124, 134, 255, 0.14); color: #a5acff; }
+.chip-premium{ background: rgba(251, 191, 36, 0.14); color: #fbbf24; }
+
+/* Display type: negative tracking as it grows, tight leading */
+.display { letter-spacing: -0.025em; line-height: 1.06; font-weight: 700; }
+
+input[type="text"], textarea {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px; padding: 10px 14px; width: 100%;
+  font-size: 14px; color: #f5f5f7; outline: none;
+  transition: border-color 140ms, box-shadow 140ms;
+}
+input[type="text"]:focus, textarea:focus {
+  border-color: rgba(124, 134, 255, 0.6);
+  box-shadow: 0 0 0 3px rgba(124, 134, 255, 0.18);
+}
+
+/* htmx swap-in: arrive as material, not a hard cut */
+#workbench.htmx-settling > * { animation: arrive 260ms cubic-bezier(0.2, 0.9, 0.3, 1); }
+@keyframes arrive {
+  from { opacity: 0; transform: translateY(6px) scale(0.99); }
+  to   { opacity: 1; transform: none; }
+}
+
+.spinner {
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.15); border-top-color: #7c86ff;
+  animation: spin 700ms linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.htmx-indicator { display: none; }
+.htmx-request .htmx-indicator, .htmx-request.htmx-indicator { display: inline-flex; }
+.htmx-request .htmx-hide { display: none; }
+
+/* ── Accessibility: gentler equivalents, not nothing ── */
+@media (prefers-reduced-motion: reduce) {
+  .press:active, .btn:active { transform: none; }
+  .panel-hover:hover { transform: none; }
+  #workbench.htmx-settling > * { animation: arrive-fade 180ms ease; }
+  @keyframes arrive-fade { from { opacity: 0; } to { opacity: 1; } }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .chrome { background: #101016; backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+@media (prefers-contrast: more) {
+  .panel { background: #101016; border-color: rgba(255, 255, 255, 0.35); }
+}

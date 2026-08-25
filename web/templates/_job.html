@@ -1,0 +1,47 @@
+{% set active = job.status in ('queued', 'running') %}
+<div class="panel p-6"
+     {% if active %}hx-get="{{ url_for('job_status', guild_id=guild_id, job_id=job.id) }}"
+     hx-trigger="every 2s" hx-target="#workbench" hx-swap="innerHTML"{% endif %}>
+  <div class="flex items-center gap-3">
+    {% if active %}<span class="spinner"></span>{% endif %}
+    <h3 class="text-lg font-semibold tracking-tight">
+      {% if job.status == 'queued' %}Waiting for the bot…
+      {% elif job.status == 'running' %}Building your server…
+      {% elif job.status == 'done' %}Done — structure applied.
+      {% elif job.status == 'partial' %}Applied with some failures.
+      {% else %}Apply failed.
+      {% endif %}
+    </h3>
+    <span class="chip {{ 'chip-create' if job.status == 'done' else ('chip-fail' if job.status in ('failed', 'partial') else 'chip-skip') }}">{{ job.status }}</span>
+  </div>
+
+  {% set created = ledger | selectattr('action', 'equalto', 'created') | list %}
+  {% set skipped = ledger | selectattr('action', 'equalto', 'skipped') | list %}
+  {% set failed  = ledger | selectattr('action', 'equalto', 'failed') | list %}
+  {% if ledger %}
+  <p class="mt-3 text-[13px] text-mut">
+    {{ created | length }} created · {{ skipped | length }} skipped
+    {% if failed %} · <span class="text-bad">{{ failed | length }} failed</span>{% endif %}
+  </p>
+  {% endif %}
+
+  {% if job.error %}
+  <div class="mt-4 rounded-xl border border-bad/30 bg-bad/10 p-3 text-[13px] text-bad">{{ job.error }}</div>
+  {% endif %}
+
+  {% if failed %}
+  <ul class="mt-3 space-y-1 text-[13px]">
+    {% for e in failed %}
+    <li><span class="chip chip-fail">{{ e.kind }}</span> {{ e.name }}
+      {% if e.detail %}<span class="text-mut">— {{ e.detail }}</span>{% endif %}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% if not active %}
+  <p class="mt-4 text-xs text-mut">
+    Nothing was deleted. Re-running the same structure safely skips everything already created.
+    Refresh the page to update the history below.
+  </p>
+  {% endif %}
+</div>

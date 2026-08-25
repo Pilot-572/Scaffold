@@ -1,0 +1,76 @@
+<div class="panel p-6">
+  <div class="flex flex-wrap items-center gap-3">
+    <h3 class="text-lg font-semibold tracking-tight">{{ structure.name }}</h3>
+    <span class="chip chip-create">{{ plan.counts.create }} to create</span>
+    {% if plan.counts.skip %}<span class="chip chip-skip">{{ plan.counts.skip }} already exist — skipped</span>{% endif %}
+  </div>
+  {% if structure.description %}<p class="mt-2 text-[13px] text-mut">{{ structure.description }}</p>{% endif %}
+  {% if notice %}
+  <div class="mt-4 rounded-xl border border-warn/30 bg-warn/10 p-3 text-[13px] text-warn">{{ notice }}</div>
+  {% endif %}
+
+  {% if plan.roles %}
+  <h4 class="mt-6 text-[13px] font-semibold uppercase tracking-wide text-mut">Roles</h4>
+  <div class="mt-2 flex flex-wrap gap-2">
+    {% for e in plan.roles %}
+    <span class="chip {{ 'chip-create' if e.action == 'create' else 'chip-skip' }}">
+      <span class="h-2 w-2 rounded-full" style="background: {{ e.item.color }}"></span>
+      {{ e.item.name }}{% if e.item.permissions %} · {{ e.item.permissions | length }} perms{% endif %}
+      · {{ 'create' if e.action == 'create' else 'skip' }}
+    </span>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <h4 class="mt-6 text-[13px] font-semibold uppercase tracking-wide text-mut">Channels</h4>
+  <div class="mt-2 space-y-4">
+    {% for cat in plan.categories %}
+    <div>
+      <p class="flex items-center gap-2 text-[13px] font-semibold">
+        {{ cat.item.name }}
+        <span class="chip {{ 'chip-create' if cat.action == 'create' else 'chip-skip' }}">{{ cat.action }}</span>
+      </p>
+      <ul class="mt-1.5 space-y-1 border-l border-white/10 pl-4">
+        {% for e in plan.channels if e.item.category == cat.item.name %}
+        <li class="flex flex-wrap items-center gap-2 text-[13px]">
+          <span class="text-mut">{{ '🔊' if e.item.type == 'voice' else '#' }}</span>
+          <span>{{ e.item.name }}</span>
+          {% if e.item.mode == 'announcement' %}<span class="chip chip-mode">read-only</span>{% endif %}
+          {% if e.item.mode == 'role_gated' %}<span class="chip chip-mode">only {{ e.item.gate_roles | join(', ') }}</span>{% endif %}
+          <span class="chip {{ 'chip-create' if e.action == 'create' else 'chip-skip' }}">{{ e.action }}</span>
+          {% if e.item.topic %}<span class="w-full pl-5 text-xs text-mut">{{ e.item.topic }}</span>{% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endfor %}
+    {% set loose = plan.channels | selectattr('item.category', 'none') | list %}
+    {% if loose %}
+    <div>
+      <p class="text-[13px] font-semibold text-mut">No category</p>
+      <ul class="mt-1.5 space-y-1 border-l border-white/10 pl-4">
+        {% for e in loose %}
+        <li class="flex flex-wrap items-center gap-2 text-[13px]">
+          <span class="text-mut">{{ '🔊' if e.item.type == 'voice' else '#' }}</span>
+          <span>{{ e.item.name }}</span>
+          <span class="chip {{ 'chip-create' if e.action == 'create' else 'chip-skip' }}">{{ e.action }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="mt-7 flex items-center gap-4 border-t border-white/10 pt-5">
+    <form hx-post="{{ url_for('apply_structure', guild_id=guild_id) }}"
+          hx-target="#workbench" hx-swap="innerHTML" hx-indicator="this">
+      <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+      <input type="hidden" name="draft_id" value="{{ draft_id }}">
+      <button class="btn btn-primary press">
+        <span class="htmx-hide">Apply to server</span>
+        <span class="htmx-indicator items-center gap-2"><span class="spinner"></span> Queuing…</span>
+      </button>
+    </form>
+    <p class="text-xs text-mut">Only the green items are created. Nothing existing is modified or deleted.</p>
+  </div>
+</div>

@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}{{ g.name }} — {{ BRAND }}{% endblock %}
+{% block content %}
+
+<div class="flex flex-wrap items-center gap-4">
+  {% if g.icon %}
+    <img src="https://cdn.discordapp.com/icons/{{ g.id }}/{{ g.icon }}.png?size=96" alt="" class="h-12 w-12 rounded-xl">
+  {% endif %}
+  <div>
+    <h1 class="display text-3xl">{{ g.name }}</h1>
+    <p class="mt-1 text-xs text-mut">
+      Applies today: {{ limits.applies_today }}/{{ limits.applies_cap }}
+      &nbsp;·&nbsp; This hour: {{ limits.applies_hour }}/{{ limits.hour_cap }}
+      {% if limits.premium %}&nbsp;·&nbsp; AI today: {{ limits.ai_today }}/{{ limits.ai_cap }}{% endif %}
+    </p>
+  </div>
+  {% if not bot_present %}
+    <a href="{{ invite }}" target="_blank" rel="noopener" class="btn btn-quiet press ml-auto">Add bot</a>
+  {% endif %}
+</div>
+
+{% if not bot_present %}
+<div class="panel mt-6 border-warn/30 p-4 text-sm text-warn">
+  The bot isn't in this server yet — add it first, then refresh this page.
+</div>
+{% endif %}
+
+<section class="mt-10">
+  <h2 class="text-lg font-semibold tracking-tight">Start from a preset</h2>
+  <p class="mt-1 text-[13px] text-mut">Ready-made layouts. Free on every tier.</p>
+  <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+    {% for p in presets %}
+    <form hx-post="{{ url_for('preview', guild_id=g.id) }}" hx-target="#workbench" hx-swap="innerHTML show:#workbench:top">
+      <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+      <input type="hidden" name="preset" value="{{ p.id }}">
+      <button class="panel panel-hover press w-full p-4 text-left">
+        <p class="text-[14px] font-semibold tracking-tight">{{ p.name }}</p>
+        <p class="mt-1 text-xs leading-relaxed text-mut">{{ p.description }}</p>
+        <p class="mt-3 text-xs font-semibold text-accent">Preview →</p>
+      </button>
+    </form>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="mt-10">
+  <div class="flex items-center gap-2">
+    <h2 class="text-lg font-semibold tracking-tight">Describe your community</h2>
+    {% if not limits.premium %}<span class="chip chip-premium">Premium</span>{% endif %}
+  </div>
+  <p class="mt-1 text-[13px] text-mut">
+    The AI designs a layout to fit — channels, roles, topics, permissions.
+    {% if not limits.premium %}
+      <a href="{{ url_for('account') }}" class="text-accent hover:underline">Redeem a license key</a> to unlock.
+    {% endif %}
+  </p>
+  <form hx-post="{{ url_for('preview', guild_id=g.id) }}" hx-target="#workbench"
+        hx-swap="innerHTML show:#workbench:top" hx-indicator="this" class="mt-4">
+    <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+    <textarea name="description" rows="3" maxlength="2000"
+              placeholder="e.g. A 40-person milsim clan playing Arma. Command staff, two squads, mission planning that only officers can see, and a public recruitment area."
+              {% if not limits.premium %}disabled{% endif %}></textarea>
+    <div class="mt-3 flex items-center gap-3">
+      <button class="btn btn-primary press" {% if not limits.premium %}disabled{% endif %}>
+        <span class="htmx-hide">Generate preview</span>
+        <span class="htmx-indicator items-center gap-2"><span class="spinner"></span> Designing…</span>
+      </button>
+      {% if limits.premium %}
+        <span class="text-xs text-mut">{{ limits.ai_cap - limits.ai_today }} generations left today</span>
+      {% endif %}
+    </div>
+  </form>
+</section>
+
+<section id="workbench" class="mt-10"></section>
+
+<section class="mt-14">
+  <h2 class="text-lg font-semibold tracking-tight">Apply history</h2>
+  <p class="mt-1 text-[13px] text-mut">The last 10 applies on this server.</p>
+  <div class="mt-4 space-y-2">
+    {% for job in history %}
+    <div class="panel flex flex-wrap items-center gap-3 px-4 py-3 text-[13px]">
+      <span class="chip {{ 'chip-create' if job.status == 'done' else ('chip-fail' if job.status in ('failed', 'partial') else 'chip-skip') }}">{{ job.status }}</span>
+      <span class="text-mut">{{ job.created_at.strftime('%Y-%m-%d %H:%M') }} UTC</span>
+      <span>{{ job.source }}</span>
+      <span class="ml-auto text-mut">{{ job.n_created }} created · {{ job.n_skipped }} skipped{% if job.n_failed %} · <span class="text-bad">{{ job.n_failed }} failed</span>{% endif %}</span>
+    </div>
+    {% else %}
+    <p class="text-sm text-mut">No applies yet.</p>
+    {% endfor %}
+  </div>
+</section>
+
+{% endblock %}

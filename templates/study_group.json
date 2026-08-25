@@ -1,0 +1,22 @@
+{
+  "name": "Study Group",
+  "description": "Announcements, subject channels, shared resources and focus voice rooms.",
+  "roles": [
+    {"name": "Tutor", "color": "#9b59b6", "hoist": true, "mentionable": true, "permissions": []},
+    {"name": "Member", "color": "#3498db", "hoist": false, "mentionable": false, "permissions": []}
+  ],
+  "categories": [
+    {"name": "Info"},
+    {"name": "Study"},
+    {"name": "Voice"}
+  ],
+  "channels": [
+    {"name": "announcements", "type": "text", "topic": "Schedule changes and deadlines. Read only.", "category": "Info", "mode": "announcement", "gate_roles": []},
+    {"name": "resources", "type": "text", "topic": "Curated notes, links and past papers. Read only — send finds to a tutor.", "category": "Info", "mode": "announcement", "gate_roles": []},
+    {"name": "general", "type": "text", "topic": "Everything that isn't studying.", "category": "Study", "mode": "public", "gate_roles": []},
+    {"name": "homework-help", "type": "text", "topic": "Stuck? Post the problem, not just the answer request.", "category": "Study", "mode": "public", "gate_roles": []},
+    {"name": "exam-prep", "type": "text", "topic": "Revision plans, mock questions, panic management.", "category": "Study", "mode": "public", "gate_roles": []},
+    {"name": "Study Hall", "type": "voice", "topic": null, "category": "Voice", "mode": "public", "gate_roles": []},
+    {"name": "Focus Room", "type": "voice", "topic": null, "category": "Voice", "mode": "public", "gate_roles": []}
+  ]
+}

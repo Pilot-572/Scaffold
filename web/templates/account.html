@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Account — {{ BRAND }}{% endblock %}
+{% block content %}
+<h1 class="display text-3xl">Account</h1>
+
+{% if message %}
+<div class="panel mt-6 p-4 text-sm">{{ message }}</div>
+{% endif %}
+
+<div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+  <div class="panel p-6">
+    <div class="flex items-center gap-2">
+      <h2 class="text-lg font-semibold tracking-tight">Your plan</h2>
+      <span class="chip {{ 'chip-premium' if limits.premium else 'chip-skip' }}">
+        {{ 'Premium' if limits.premium else 'Free' }}</span>
+    </div>
+    <ul class="mt-4 space-y-2 text-[13px] text-mut">
+      <li>Applies per day: <span class="text-ink">{{ limits.applies_cap }}</span>
+          (used today: {{ limits.applies_today }})</li>
+      <li>Applies per hour: <span class="text-ink">{{ limits.hour_cap }}</span></li>
+      <li>AI generations per day:
+        <span class="text-ink">{{ limits.ai_cap if limits.premium else 'Premium only' }}</span>
+        {% if limits.premium %}(used today: {{ limits.ai_today }}){% endif %}</li>
+    </ul>
+    {% if license %}
+    <p class="mt-4 text-xs text-mut">License {{ license.key[:7] }}··· redeemed
+       {{ license.redeemed_at.strftime('%Y-%m-%d') if license.redeemed_at }}</p>
+    {% endif %}
+  </div>
+
+  <div class="panel p-6">
+    <h2 class="text-lg font-semibold tracking-tight">Redeem a license key</h2>
+    <p class="mt-1 text-[13px] text-mut">Unlocks AI generation and higher limits on every server you manage.</p>
+    <form method="post" action="{{ url_for('redeem') }}" class="mt-4 flex gap-2">
+      <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+      <input type="text" name="key" placeholder="SF-XXXX-XXXX-XXXX" required
+             autocomplete="off" spellcheck="false" class="font-mono uppercase">
+      <button class="btn btn-primary press shrink-0">Redeem</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="mx-auto flex max-w-xl flex-col items-center pt-20 text-center">
+  <span class="brandmark mb-8" style="width:44px;height:44px;border-radius:14px"></span>
+  <h1 class="display text-5xl">Design your Discord server in plain words.</h1>
+  <p class="mt-5 max-w-md text-[15px] leading-relaxed text-mut">
+    Describe your community, preview the layout as a diff, and let the bot build it.
+    Nothing that already exists is ever modified or deleted.
+  </p>
+  <a href="{{ url_for('login') }}" class="btn btn-primary press mt-9">
+    Continue with Discord
+  </a>
+  <div class="mt-14 grid w-full grid-cols-1 gap-3 text-left sm:grid-cols-3">
+    <div class="panel p-4">
+      <p class="text-[13px] font-semibold">Additive only</p>
+      <p class="mt-1 text-xs leading-relaxed text-mut">Creates what's missing, skips what exists. Your server is never touched destructively.</p>
+    </div>
+    <div class="panel p-4">
+      <p class="text-[13px] font-semibold">Preview first</p>
+      <p class="mt-1 text-xs leading-relaxed text-mut">Every change is shown as a diff before anything happens. You approve, the bot applies.</p>
+    </div>
+    <div class="panel p-4">
+      <p class="text-[13px] font-semibold">Minimal permissions</p>
+      <p class="mt-1 text-xs leading-relaxed text-mut">The bot asks for Manage Channels and Roles only. Never Administrator.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

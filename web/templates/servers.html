@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Servers — {{ BRAND }}{% endblock %}
+{% block content %}
+<h1 class="display text-3xl">Your servers</h1>
+<p class="mt-2 text-sm text-mut">Servers where you have Manage Server. Add the bot to any of them to start designing.</p>
+
+<div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+  {% for g in guilds %}
+  <div class="panel panel-hover flex flex-col p-5">
+    <div class="flex items-center gap-3">
+      {% if g.icon %}
+        <img src="https://cdn.discordapp.com/icons/{{ g.id }}/{{ g.icon }}.png?size=96"
+             alt="" class="h-11 w-11 rounded-xl">
+      {% else %}
+        <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-lg font-bold">
+          {{ g.name[0] }}</span>
+      {% endif %}
+      <div class="min-w-0">
+        <p class="truncate text-[15px] font-semibold tracking-tight">{{ g.name }}</p>
+        <p class="text-xs {{ 'text-good' if g.bot_present else 'text-mut' }}">
+          {{ 'Bot connected' if g.bot_present else 'Bot not added yet' }}
+        </p>
+      </div>
+    </div>
+    <div class="mt-5">
+      {% if g.bot_present %}
+        <a href="{{ url_for('guild_page', guild_id=g.id) }}" class="btn btn-primary press w-full">Open</a>
+      {% else %}
+        <a href="{{ g.invite }}" target="_blank" rel="noopener" class="btn btn-quiet press w-full">Add bot</a>
+      {% endif %}
+    </div>
+  </div>
+  {% else %}
+  <p class="text-sm text-mut">No servers found where you have Manage Server.</p>
+  {% endfor %}
+</div>
+{% endblock %}
