@@ -6,16 +6,16 @@
   {% if g.icon %}
     <img src="https://cdn.discordapp.com/icons/{{ g.id }}/{{ g.icon }}.png?size=96" alt="" class="h-12 w-12 rounded-xl">
   {% else %}
-    <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-lg font-bold">
+    <span class="tile-brand flex h-12 w-12 items-center justify-center rounded-xl text-lg font-bold">
       {{ g.name[0] }}</span>
   {% endif %}
   <div>
     <h1 class="display text-3xl">{{ g.name }}</h1>
-    <p class="mt-1 text-xs text-mut">
-      Applies today: {{ limits.applies_today }}/{{ limits.applies_cap }}
-      &nbsp;·&nbsp; This hour: {{ limits.applies_hour }}/{{ limits.hour_cap }}
-      {% if limits.premium %}&nbsp;·&nbsp; AI today: {{ limits.ai_today }}/{{ limits.ai_cap }}{% endif %}
-    </p>
+    <div class="mt-2 flex flex-wrap gap-1.5">
+      <span class="chip chip-stat">{{ limits.applies_today }}/{{ limits.applies_cap }} applies today</span>
+      <span class="chip chip-stat">{{ limits.applies_hour }}/{{ limits.hour_cap }} this hour</span>
+      {% if limits.premium %}<span class="chip chip-stat">{{ limits.ai_today }}/{{ limits.ai_cap }} AI today</span>{% endif %}
+    </div>
   </div>
   {% if not bot_present %}
     <a href="{{ invite }}" target="_blank" rel="noopener" class="btn btn-quiet press ml-auto">Add bot</a>
@@ -31,20 +31,26 @@
 <section class="mt-10">
   <h2 class="text-lg font-semibold tracking-tight">Start from a preset</h2>
   <p class="mt-1 text-[13px] text-mut">Ready-made layouts. Free on every tier.</p>
+  {% set icons = {'creator_community': '🎨', 'gaming_clan': '🎮', 'small_team': '💼', 'study_group': '📚'} %}
   <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
     {% for p in presets %}
     <form hx-post="{{ url_for('preview', guild_id=g.id) }}" hx-target="#workbench" hx-swap="innerHTML show:#workbench:top">
       <input type="hidden" name="_csrf" value="{{ csrf_token }}">
       <input type="hidden" name="preset" value="{{ p.id }}">
-      <button class="panel panel-hover press w-full p-4 text-left">
-        <p class="text-[14px] font-semibold tracking-tight">{{ p.name }}</p>
-        <p class="mt-1 text-xs leading-relaxed text-mut">{{ p.description }}</p>
-        <p class="mt-3 text-xs font-semibold text-accent">Preview <span class="go">→</span></p>
+      <button class="panel panel-hover press flex w-full gap-3.5 p-4 text-left">
+        <span class="tile-icon" aria-hidden="true">{{ icons.get(p.id, '📋') }}</span>
+        <span class="min-w-0">
+          <p class="text-[14px] font-semibold tracking-tight">{{ p.name }}</p>
+          <p class="mt-1 text-xs leading-relaxed text-mut">{{ p.description }}</p>
+          <p class="mt-3 text-xs font-semibold text-accent">Preview <span class="go">→</span></p>
+        </span>
       </button>
     </form>
     {% endfor %}
   </div>
 </section>
+
+<hr class="hairline mt-12">
 
 <section class="mt-10">
   <div class="flex items-center gap-2">
@@ -81,7 +87,9 @@
 
 <section id="workbench" class="mt-10"></section>
 
-<section class="mt-14">
+<hr class="hairline mt-12">
+
+<section class="mt-10">
   <h2 class="text-lg font-semibold tracking-tight">Apply history</h2>
   <p class="mt-1 text-[13px] text-mut">The last 10 applies on this server.</p>
   <div class="mt-4 space-y-2">
