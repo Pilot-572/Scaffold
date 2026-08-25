@@ -14,7 +14,7 @@
     <div class="mt-2 flex flex-wrap gap-1.5">
       <span class="chip chip-stat">{{ limits.applies_today }}/{{ limits.applies_cap }} applies today</span>
       <span class="chip chip-stat">{{ limits.applies_hour }}/{{ limits.hour_cap }} this hour</span>
-      {% if limits.premium %}<span class="chip chip-stat">{{ limits.ai_today }}/{{ limits.ai_cap }} AI today</span>{% endif %}
+      <span class="chip chip-stat">{{ limits.ai_today }}/{{ limits.ai_cap }} AI today</span>
     </div>
   </div>
   {% if not bot_present %}
@@ -53,34 +53,26 @@
 <hr class="hairline mt-12">
 
 <section class="mt-10">
-  <div class="flex items-center gap-2">
-    <h2 class="text-lg font-semibold tracking-tight">Describe your community</h2>
-    {% if not limits.premium %}<span class="chip chip-premium">Premium</span>{% endif %}
-  </div>
+  <h2 class="text-lg font-semibold tracking-tight">Describe your community</h2>
   <p class="mt-1 text-[13px] text-mut">
     The AI designs a layout to fit: channels, roles, topics, permissions.
-    {% if not limits.premium %}
-      <a href="{{ url_for('account') }}" class="text-accent hover:underline">Redeem a license key</a> to unlock.
-    {% endif %}
   </p>
   <form hx-post="{{ url_for('preview', guild_id=g.id) }}" hx-target="#workbench"
         hx-swap="innerHTML show:#workbench:top" hx-indicator="this" class="mt-4">
     <input type="hidden" name="_csrf" value="{{ csrf_token }}">
     <textarea name="description" rows="3" maxlength="2000"
-              {% if limits.premium %}
-              placeholder="e.g. A 40-person milsim clan playing Arma. Command staff, two squads, mission planning that only officers can see, and a public recruitment area."
-              {% else %}
-              placeholder="🔒 Premium feature. Redeem a license key on the Account page to unlock AI generation."
-              disabled
-              {% endif %}></textarea>
+              placeholder="e.g. A 40-person milsim clan playing Arma. Command staff, two squads, mission planning that only officers can see, and a public recruitment area."></textarea>
     <div class="mt-3 flex items-center gap-3">
-      <button class="btn btn-primary press" {% if not limits.premium %}disabled{% endif %}>
+      <button class="btn btn-primary press">
         <span class="htmx-hide">Generate preview</span>
         <span class="htmx-indicator items-center gap-2"><span class="spinner"></span> Designing…</span>
       </button>
-      {% if limits.premium %}
-        <span class="text-xs text-mut">{{ limits.ai_cap - limits.ai_today }} generations left today</span>
-      {% endif %}
+      <span class="text-xs text-mut">
+        {{ limits.ai_cap - limits.ai_today }} generations left today
+        {% if not limits.premium %}
+          · <a href="{{ url_for('account') }}" class="text-accent hover:underline">Premium</a> raises this to 20/day
+        {% endif %}
+      </span>
     </div>
   </form>
 </section>

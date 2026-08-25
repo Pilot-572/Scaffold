@@ -82,7 +82,7 @@ python manage.py revoke SF-XXXX-XXXX-XXXX
 | | Free | Premium |
 |---|---|---|
 | Presets | yes | yes |
-| AI generation | – | 20/day |
+| AI generation | 2/day | 20/day |
 | Applies | 2/day | 10/day |
 | Burst | 3/hour | 3/hour |
 

@@ -105,7 +105,7 @@ def _limits(db, user_id: str) -> dict:
         "applies_hour": applies_hour,
         "hour_cap": config.APPLIES_PER_HOUR,
         "ai_today": ai_today,
-        "ai_cap": config.PREMIUM_AI_PER_DAY if premium else 0,
+        "ai_cap": config.PREMIUM_AI_PER_DAY if premium else config.FREE_AI_PER_DAY,
     }
 
 
@@ -211,12 +211,12 @@ def preview(guild_id):
                 abort(400)
             source = f"preset:{preset_id}"
         elif description:
-            if not limits["premium"]:
-                return _error_partial("AI generation is a premium feature.",
-                                      "Redeem a license key on your account page to unlock it.")
             if limits["ai_today"] >= limits["ai_cap"]:
                 return _error_partial(f"You've used all {limits['ai_cap']} AI generations for today.",
-                                      "Presets are always available, or try again tomorrow.")
+                                      "Presets are always available, or try again tomorrow."
+                                      if limits["premium"] else
+                                      f"Premium raises this to {config.PREMIUM_AI_PER_DAY}/day. "
+                                      "Presets are always available.")
             from shared.llm import generate  # deferred: keeps web boot LLM-free
             structure, notice = generate(description)
             source = "ai"

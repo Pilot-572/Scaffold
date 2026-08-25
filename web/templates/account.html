@@ -18,9 +18,8 @@
       <li>Applies per day: <span class="text-ink">{{ limits.applies_cap }}</span>
           (used today: {{ limits.applies_today }})</li>
       <li>Applies per hour: <span class="text-ink">{{ limits.hour_cap }}</span></li>
-      <li>AI generations per day:
-        <span class="text-ink">{{ limits.ai_cap if limits.premium else 'Premium only' }}</span>
-        {% if limits.premium %}(used today: {{ limits.ai_today }}){% endif %}</li>
+      <li>AI generations per day: <span class="text-ink">{{ limits.ai_cap }}</span>
+          (used today: {{ limits.ai_today }})</li>
     </ul>
     {% if license %}
     <p class="mt-4 text-xs text-mut">License {{ license.key[:7] }}··· redeemed
@@ -30,7 +29,7 @@
 
   <div class="panel p-6">
     <h2 class="text-lg font-semibold tracking-tight">Redeem a license key</h2>
-    <p class="mt-1 text-[13px] text-mut">Unlocks AI generation and higher limits on every server you manage.</p>
+    <p class="mt-1 text-[13px] text-mut">Raises your AI and apply limits on every server you manage.</p>
     <form method="post" action="{{ url_for('redeem') }}" class="mt-4 flex gap-2">
       <input type="hidden" name="_csrf" value="{{ csrf_token }}">
       <input type="text" name="key" placeholder="SF-XXXX-XXXX-XXXX" required
