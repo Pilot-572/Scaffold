@@ -30,7 +30,7 @@ Hard rules:
 - Max {config.CAP_ROLES} roles, {config.CAP_CATEGORIES} categories, {config.CAP_CHANNELS} channels.
 - role permissions may ONLY come from: {", ".join(sorted(ALLOWED_PERMS))}. Most roles should have [].
 - Every channel's "category" must exactly match a name in "categories" (or be null).
-- "announcement" = everyone reads, nobody but staff posts. "role_gated" = only "gate_roles" (which must name roles you defined) can see it; use sparingly.
+- "announcement" = everyone reads, nobody but staff posts. "role_gated" = only "gate_roles" can see it; gate_roles may name roles you defined here OR roles the user says already exist on their server. Use sparingly.
 - Text channel names: lowercase-with-dashes. Voice channels: normal casing, no topic.
 - No duplicate names. No invite links, no @everyone/@here anywhere.
 - Fit the community described; sensible topics on text channels."""
