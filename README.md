@@ -1,3 +1,5 @@
+<img src="assets/banner.png" alt="Scaffold — design your Discord server in plain words" width="100%">
+
 # Scaffold
 
 A Discord bot + web dashboard that designs server structures and applies them.
