@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  /* Wide slot variant (~4.6:1, e.g. Stardance project header). Master: banner.html */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1600px; height: 344px; overflow: hidden; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: #f5f5f7;
+    background:
+      radial-gradient(900px 420px at 18% -14%, rgba(124, 134, 255, 0.16), transparent 62%),
+      radial-gradient(700px 380px at 96% 120%, rgba(52, 211, 153, 0.09), transparent 62%),
+      #0a0a0f;
+    position: relative;
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(124, 134, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124, 134, 255, 0.045) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(1000px 520px at 30% 40%, black 30%, transparent 78%);
+    -webkit-mask-image: radial-gradient(1000px 520px at 30% 40%, black 30%, transparent 78%);
+  }
+  .wrap {
+    position: relative; height: 100%;
+    display: flex; align-items: center; gap: 80px;
+    padding: 0 84px;
+  }
+  .left { flex: 1; min-width: 0; }
+  .lockup { display: flex; align-items: center; gap: 16px; }
+  .brandmark {
+    width: 48px; height: 48px; border-radius: 14px;
+    background: conic-gradient(from 210deg, #7c86ff, #34d399, #7c86ff);
+    box-shadow: 0 0 32px rgba(124, 134, 255, 0.5);
+  }
+  h1 { font-size: 62px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+  .tagline {
+    margin-top: 18px; font-size: 21px; line-height: 1.4;
+    color: #9b9ba3; letter-spacing: -0.005em; max-width: 560px;
+  }
+  .tagline b { color: #f5f5f7; font-weight: 600; }
+  .pillars { margin-top: 22px; display: flex; gap: 9px; }
+  .pill {
+    font-size: 13px; font-weight: 600; letter-spacing: 0.01em;
+    color: #9b9ba3; padding: 6px 13px; border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .panel {
+    flex: none; width: 470px;
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 18px; padding: 20px 24px;
+    box-shadow: 0 20px 56px rgba(0, 0, 0, 0.45);
+  }
+  .panel-head { display: flex; align-items: center; gap: 11px; margin-bottom: 10px; }
+  .panel-title { font-size: 16.5px; font-weight: 650; letter-spacing: -0.01em; }
+  .count {
+    font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px;
+    background: rgba(52, 211, 153, 0.14); color: #34d399;
+  }
+  .row {
+    display: flex; align-items: center; gap: 9px;
+    font-size: 14.5px; padding: 6px 0; color: #c9c9cf;
+  }
+  .row.cat { color: #f5f5f7; font-weight: 650; font-size: 13px;
+             letter-spacing: 0.06em; text-transform: uppercase; }
+  .row.cat .chip { text-transform: none; letter-spacing: 0.02em; }
+  .row.indent { padding-left: 20px; }
+  .hash { color: #6a6a74; font-weight: 500; }
+  .chip {
+    margin-left: auto; font-size: 11.5px; font-weight: 600;
+    padding: 3px 9px; border-radius: 999px; letter-spacing: 0.02em;
+  }
+  .create { background: rgba(52, 211, 153, 0.14); color: #34d399; }
+  .skip   { background: rgba(255, 255, 255, 0.07); color: #9b9ba3; }
+  .gate   { background: rgba(124, 134, 255, 0.14); color: #a5acff; margin-left: 8px; }
+  .gate + .chip { margin-left: auto; }
+  .hr { border: 0; border-top: 1px solid rgba(255, 255, 255, 0.07); margin: 6px 0; }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="wrap">
+    <div class="left">
+      <div class="lockup">
+        <div class="brandmark"></div>
+        <h1>Scaffold</h1>
+      </div>
+      <p class="tagline">Design your Discord server in <b>plain words</b>. Preview the layout as a diff, let the bot build it.</p>
+      <div class="pillars">
+        <span class="pill">Additive only</span>
+        <span class="pill">Preview first</span>
+        <span class="pill">Minimal permissions</span>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head">
+        <span class="panel-title">Milsim Faction</span>
+        <span class="count">8 to create</span>
+      </div>
+      <div class="row cat">Info <span class="chip create">create</span></div>
+      <div class="row indent"><span class="hash">#</span> welcome-and-rules <span class="chip gate">read-only</span><span class="chip create">create</span></div>
+      <div class="row indent"><span class="hash">#</span> ops-planning <span class="chip gate">Command only</span><span class="chip create">create</span></div>
+      <hr class="hr">
+      <div class="row indent">🔊 Lobby <span class="chip skip">skip</span></div>
+      <div class="row indent">🔊 Squad 1 <span class="chip create">create</span></div>
+    </div>
+  </div>
+</body>
+</html>
