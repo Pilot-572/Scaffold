@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  /* Crop-safe variant: everything centered so cover-cropping thumbnails
+     (e.g. the Stardance project card) can't cut the wordmark. */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1600px; height: 344px; overflow: hidden; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: #f5f5f7;
+    background:
+      radial-gradient(1000px 460px at 50% -20%, rgba(124, 134, 255, 0.17), transparent 62%),
+      radial-gradient(800px 400px at 50% 130%, rgba(52, 211, 153, 0.08), transparent 62%),
+      #0a0a0f;
+    position: relative;
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(124, 134, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124, 134, 255, 0.045) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(900px 520px at 50% 50%, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(900px 520px at 50% 50%, black 30%, transparent 80%);
+  }
+  .wrap {
+    position: relative; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 20px;
+  }
+  .lockup { display: flex; align-items: center; gap: 18px; }
+  .brandmark {
+    width: 56px; height: 56px; border-radius: 17px;
+    background: conic-gradient(from 210deg, #7c86ff, #34d399, #7c86ff);
+    box-shadow: 0 0 36px rgba(124, 134, 255, 0.5);
+  }
+  h1 { font-size: 76px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+  .tagline {
+    font-size: 23px; color: #9b9ba3; letter-spacing: -0.005em; text-align: center;
+  }
+  .tagline b { color: #f5f5f7; font-weight: 600; }
+  .pillars { display: flex; gap: 10px; }
+  .pill {
+    font-size: 13.5px; font-weight: 600; letter-spacing: 0.01em;
+    color: #9b9ba3; padding: 6px 14px; border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="wrap">
+    <div class="lockup">
+      <div class="brandmark"></div>
+      <h1>Scaffold</h1>
+    </div>
+    <p class="tagline">Design your Discord server in <b>plain words</b> — preview the diff, let the bot build it.</p>
+    <div class="pillars">
+      <span class="pill">Additive only</span>
+      <span class="pill">Preview first</span>
+      <span class="pill">Minimal permissions</span>
+    </div>
+  </div>
+</body>
+</html>
